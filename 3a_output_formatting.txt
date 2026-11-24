@@ -1,0 +1,55 @@
+from flask import Flask, request
+import requests
+
+def emotion_detector(text_to_analyze):
+    url= 'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'
+    headers= {"grpc-metadata-mm-model-id": "emotion_aggregated-workflow_lang_en_stock"}
+    input_json= { "raw_document": { "text": text_to_analyze } }
+    response = requests.post(
+    url, 
+    json=input_json, 
+    headers=headers
+    )
+    response_json = response.json()
+
+    final_response = response_json["emotionPredictions"][0]["emotion"]
+    domain = max(
+        final_response['anger'],
+        final_response['disgust'],
+        final_response['fear'],
+        final_response['joy'],
+        final_response['sadness']
+        )
+    final_response['dominant_emotion'] = [key for key, value in final_response.items() if value == domain]
+
+    return final_response
+
+
+print(emotion_detector("Me encanta esta nueva tecnología."))from flask import Flask, request
+import requests
+
+def emotion_detector(text_to_analyze):
+    url= 'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'
+    headers= {"grpc-metadata-mm-model-id": "emotion_aggregated-workflow_lang_en_stock"}
+    input_json= { "raw_document": { "text": text_to_analyze } }
+    response = requests.post(
+    url, 
+    json=input_json, 
+    headers=headers
+    )
+    response_json = response.json()
+
+    final_response = response_json["emotionPredictions"][0]["emotion"]
+    domain = max(
+        final_response['anger'],
+        final_response['disgust'],
+        final_response['fear'],
+        final_response['joy'],
+        final_response['sadness']
+        )
+    final_response['dominant_emotion'] = [key for key, value in final_response.items() if value == domain]
+
+    return final_response
+
+
+print(emotion_detector("Me encanta esta nueva tecnología."))
