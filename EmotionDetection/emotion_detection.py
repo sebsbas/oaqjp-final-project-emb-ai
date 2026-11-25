@@ -20,9 +20,10 @@ def emotion_detector(text_to_analyze):
         final_response['joy'],
         final_response['sadness']
         )
-    final_response['dominant_emotion'] = [key for key, value in final_response.items() if value == domain]
+    domain_emotion = [key for key, value in final_response.items() if value == domain]
+    final_response['dominant_emotion'] = domain_emotion
 
-    return final_response
+    return domain_emotion
 
 
-print(emotion_detector("Me encanta esta nueva tecnología."))
+#print(emotion_detector("Me encanta esta nueva tecnología."))
