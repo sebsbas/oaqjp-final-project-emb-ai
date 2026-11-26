@@ -1,14 +1,26 @@
-from flask import Flask, request
+"""Modulo de rutas para plataforma de análisis de emociones en texto"""
+
+from flask import Flask, request, render_template, jsonify
 from EmotionDetection import emotion_detector
 
 app = Flask(__name__)
 
 
+@app.route("/")
+def index():
+    """Endpoint que retorna el template inicial de la plataforma"""
+    return render_template("index.html")
+
+
 @app.route("/emotionDetector")
 def sent_analyzer():
+    """Función que recibe un texto para analizar y retorna los resultados de la emoción más afín al 
+    texto"""
     text_to_analyze = request.args.get("textToAnalyze")
     response = emotion_detector(text_to_analyze)
-    return str(response)
+    if not response['dominant_emotion']:
+        return " ¡Texto inválido! ¡Por favor, inténtalo de nuevo!", response['status_code']
+    return jsonify(response), response['status_code']
 
 
 if __name__ == "__main__":

@@ -1,7 +1,6 @@
-python3 test_emotion_detection.py
-.
+python3 test_emotion_detection.py 
+.....
 ----------------------------------------------------------------------
-Ran 1 test in 0.586spython3 test_emotion_detection.py
-.
-----------------------------------------------------------------------
-Ran 1 test in 0.586s
+Ran 5 tests in 0.576s
+
+OK
